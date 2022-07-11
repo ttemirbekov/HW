@@ -16,6 +16,7 @@ values ('Iphone X', 'Apple', 2, 71000, false),
 
 --1. HTC компаниясынан башка компаниянын продуктуларын алыныз
 select * from products where manufacturer  not in ('HTC');
+select * from products where manufacturer  <> 'HTC';
 select product_name from products where manufacturer  not in ('HTC');
 
 --2. Apple компаниясынын 75000минден томонку баадагы продуктуларын алыныз.
@@ -29,7 +30,9 @@ select * from products where price >= 46000;
 select * from products order by price desc limit 2;
 
 --5. Баасы минимальный болгон продуктун атын алыныз
-SELECT MIN(product_name) FROM products;
+select MIN(product_name) FROM products;
+select product_name from products where price = (select min(price) from products);
+select product_name, price from products where price = (select min(price) from products);
 
 --6. Дискоунт болгон продуктуларды чыгарыныз.
 select * from products where isDiscounted = true;
@@ -42,7 +45,8 @@ select price from products order by price desc;
 
 --9. Баардык продуктулардын суммасын(баасын) чыгарыныз.
 select sum(price) from products;
-select sum(product_count) from products;
+select sum(price) as totalprice from products;
 
 --10. Эки жана андан аз продуктусу бар компанияларды алыныз
 select manufacturer from products where product_count <=2 ;
+select manufacturer, count(*) from products group by manufacturer having count(*) <=2;
